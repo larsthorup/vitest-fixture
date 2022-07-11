@@ -3,10 +3,10 @@
     "allowJs": true,
     "checkJs": true,
     "esModuleInterop": true,
-    "lib": ["DOM", "ESNext"],
+    "lib": ["dom", "esnext"],
     "noEmit": true,
     "strict": true,
-    "types": ["Node"]
+    "types": ["node"]
   },
   "exclude": ["node_modules"],
   "include": ["**/*.js", "**/*.ts"]
