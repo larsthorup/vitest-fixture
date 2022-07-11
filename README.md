@@ -34,6 +34,5 @@ npm test
 ```
 npm version minor
 npm publish
-git commit -m "release"
 git push
 ```
