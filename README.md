@@ -3,7 +3,21 @@
 Reusable fixtures for your Vitest tests
 
 ```bash
-npm install vitest-fixture
+npm install --save-dev vitest-fixture vitest
+```
+
+Create `vitest.config.js`:
+
+```js
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: {
+    deps: {
+      inline: ["vitest-fixture"],
+    },
+  },
+});
 ```
 
 See [example usage](./example/example.test.js)

@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run && prettier --check ."
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,11 @@
   "homepage": "https://github.com/larsthorup/vitest-fixture#readme",
   "peerDependencies": {
     "vitest": "^0.18.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.7.1"
+  },
+  "prettier": {
+    "endOfLine": "auto"
   }
 }
