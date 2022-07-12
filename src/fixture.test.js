@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { applyWithFixtures } from "./fixture.js";
 
 /** @typedef {import('..').KeyValue} KeyValue */
+
 /**
  * @template {KeyValue} T
  * @template {KeyValue} W
@@ -81,6 +82,7 @@ describe("fixture", () => {
         expect(fn).toHaveBeenCalledWith({ port: 3000, server: { port: 3000 } });
       });
     });
+
     describe("when a fixture includes a teardown function", () => {
       it("should apply teardown", async () => {
         const fn = mockFn();
