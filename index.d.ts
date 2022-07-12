@@ -47,4 +47,9 @@ export type FixtureValue<TestArgs, WorkerArgs> =
   | TestFixtureValue<any, TestArgs>
   | [TestFixtureValue<any, TestArgs>, FixtureOptions]
   | [WorkerFixtureValue<any, WorkerArgs>, FixtureOptions];
+export type WorkerFixtureRegistry = {
+  allTests: Fixtures<KeyValue, KeyValue, KeyValue, KeyValue>[];
+  hookRegistered: boolean;
+  valueCache: KeyValue;
+};
 declare const test: TestType<{}, {}>;

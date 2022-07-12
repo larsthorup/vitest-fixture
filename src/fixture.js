@@ -1,4 +1,7 @@
+import { getWorkerFixtureRegistry } from "./workerFixtureRegistry.js";
+
 /** @typedef {import('..').KeyValue} KeyValue */
+
 /**
  * @template {KeyValue} T
  * @template {KeyValue} W
@@ -56,6 +59,12 @@ const reduceFixtures = async (fn, fixtureList, args) => {
     switch (scope) {
       case "test":
         return fixtureFunction(args, use);
+      case "worker": {
+        // TODO: merge with above
+        const value = getWorkerFixtureRegistry().valueCache[key];
+        const argsAccumulated = { ...args, [key]: value };
+        return reduceFixtures(fn, fixtureListRest, argsAccumulated);
+      }
       default:
         throw new Error(`Unsupported scope: ${scope}`);
     }

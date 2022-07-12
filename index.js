@@ -1,6 +1,10 @@
 import * as vitest from "vitest";
 
 import { applyWithFixtures } from "./src/fixture.js";
+import {
+  getWorkerFixtureRegistry,
+  workerHook,
+} from "./src/workerFixtureRegistry.js";
 
 // Note: inspired by https://github.com/microsoft/playwright
 
@@ -28,11 +32,17 @@ class TestTypeImpl {
    */
   constructor(fixtures) {
     this.fixtures = fixtures;
+    getWorkerFixtureRegistry().allTests.push(this.fixtures);
     /**
      * @param {string} name
      * @param {(args: TestArgs & WorkerArgs) => void} fn
      */
     const test = (name, fn) => {
+      if (!getWorkerFixtureRegistry().hookRegistered) {
+        // Note: ensure that we only generate a single beforeAll for the worker
+        getWorkerFixtureRegistry().hookRegistered = true;
+        vitest.beforeAll(workerHook);
+      }
       vitest.test(name, () => applyWithFixtures(fn, this.fixtures));
     };
     /**
