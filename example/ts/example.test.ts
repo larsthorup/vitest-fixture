@@ -1,5 +1,5 @@
 import { describe, expect } from "vitest";
-import { test } from "./withServer.js";
+import { test } from "./withServer";
 
 describe("example", () => {
   test("server", ({ server }) => {

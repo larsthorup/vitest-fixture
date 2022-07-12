@@ -1,13 +1,13 @@
-import { test as base } from "../index.js";
+import { test as base } from "../..";
 
-/** @typedef {import('../index.js').KeyValue} KeyValue */
+/** @typedef {import('../..').KeyValue} KeyValue */
 
 /**
  * @template {KeyValue} T
    @template {KeyValue} W
  * @template {KeyValue} PT
    @template {KeyValue} PW
-   @typedef {import('../index.js').Fixtures<T,W,PT,PW>} Fixtures
+   @typedef {import('../..').Fixtures<T,W,PT,PW>} Fixtures
  */
 
 /** @typedef { { port: number } } Server */

@@ -43,12 +43,8 @@ export type Fixtures<
 };
 type FixtureScope = "test" | "worker";
 type FixtureOptions = { scope: FixtureScope };
-type FixtureValue<TestArgs, WorkerArgs> =
+export type FixtureValue<TestArgs, WorkerArgs> =
   | TestFixtureValue<any, TestArgs>
   | [TestFixtureValue<any, TestArgs>, FixtureOptions]
   | [WorkerFixtureValue<any, WorkerArgs>, FixtureOptions];
-export type FixtureList<TestArgs, WorkerArgs> = [
-  key: string,
-  value: FixtureValue<TestArgs, WorkerArgs>
-][];
 declare const test: TestType<{}, {}>;

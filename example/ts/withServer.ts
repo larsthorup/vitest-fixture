@@ -1,4 +1,4 @@
-import { test as base } from "../index.js";
+import { test as base } from "../..";
 
 type Server = { port: number };
 
