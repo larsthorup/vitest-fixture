@@ -6,7 +6,7 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "test": "vitest run && tsc && eslint . && prettier --check ."
+    "test": "vitest --coverage run && tsc && eslint . && prettier --check ."
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
     "vitest": "^0.18.0"
   },
   "devDependencies": {
+    "c8": "^7.11.3",
     "eslint": "^8.19.0",
     "prettier": "^2.7.1",
     "typescript": "^4.7.4"
