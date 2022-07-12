@@ -20,7 +20,7 @@ export default defineConfig({
 });
 ```
 
-See [example usage](./example/example.test.js)
+See [example usage](./example/ts/example.test.ts)
 
 ## Develop
 
