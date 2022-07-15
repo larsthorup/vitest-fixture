@@ -107,5 +107,30 @@ describe("workerFixtureRegistry", () => {
         });
       });
     });
+
+    describe("when worker scoped fixture after test scoped fixture", () => {
+      beforeEach(() => {
+        getWorkerFixtureRegistry().allTests.push(
+          /** @type { Fixtures<{now: string}, {db: {some: string}}, {}, {}> } */
+          ({
+            now: ["2022-07-15T13:00:00.000Z", { scope: "test" }],
+            db: [
+              async (_, use) => {
+                use({ some: "db" });
+              },
+              { scope: "worker" },
+            ],
+          })
+        );
+      });
+
+      it("should pass undefined as the value of test scoped fixture", async () => {
+        await workerHook();
+        expect(getWorkerFixtureRegistry().valueCache).toEqual({
+          now: undefined,
+          db: { some: "db" },
+        });
+      });
+    });
   });
 });

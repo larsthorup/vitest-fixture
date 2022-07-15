@@ -1,5 +1,7 @@
 /** @typedef {import('..').KeyValue} KeyValue */
 
+/** @typedef { import('..').UseFunction } UseFunction */
+
 /**
  * @template {KeyValue} TestArgs
  * @template {KeyValue} WorkerArgs
@@ -39,9 +41,9 @@ export const workerHook = async () => {
   /**
    * @param {FixtureList<KeyValue, KeyValue>} fixtureList
    * @param {KeyValue} args
-   * @returns
+   * @returns {Promise<void>}
    */
-  const reduceFixtures = async (fixtureList, args) /*: Promise<void>*/ => {
+  const reduceFixtures = async (fixtureList, args) => {
     if (fixtureList.length > 0) {
       const [[key, fixture], ...fixtureListRest] = fixtureList;
       const [fixtureValueOrFunction, { scope }] = Array.isArray(fixture)
@@ -58,18 +60,26 @@ export const workerHook = async () => {
           : fixtureValueFunction;
       /**
        * @param {any} value
-       * @param {() => Promise<void>} teardown
+       * @param {(() => Promise<void>) | undefined} teardown
        */
       const use = async (value, teardown) => {
         getWorkerFixtureRegistry().valueCache[key] = value;
         const argsAccumulated = { ...args, [key]: value };
-        if (teardown) teardownList.push(teardown);
+        if (teardown) teardownList.push(teardown); // TODO: pass teardownlist to fn()
         return reduceFixtures(fixtureListRest, argsAccumulated);
       };
       switch (scope) {
-        case "test":
-          getWorkerFixtureRegistry().valueCache[key] = undefined;
-          return;
+        case "test": {
+          /**
+           * @param {KeyValue} _
+           * @param {UseFunction} use
+           */
+          const fixtureFunction = async (_, use) => {
+            getWorkerFixtureRegistry().valueCache[key] = undefined;
+            await use(undefined, undefined);
+          };
+          return fixtureFunction(args, use);
+        }
         case "worker":
           return fixtureFunction(args, use);
       }

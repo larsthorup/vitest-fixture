@@ -2,6 +2,8 @@ import { getWorkerFixtureRegistry } from "./workerFixtureRegistry.js";
 
 /** @typedef {import('..').KeyValue} KeyValue */
 
+/** @typedef { import('..').UseFunction } UseFunction */
+
 /**
  * @template {KeyValue} T
  * @template {KeyValue} W
@@ -40,30 +42,32 @@ const reduceFixtures = async (fn, fixtureList, args) => {
       : [fixture, { scope: "test" }];
     /**
      * @param {KeyValue} _
-     * @param {(value: any) => Promise<void>} use
+     * @param {UseFunction} use
      */
-    const fixtureValueFunction = (_, use) => use(fixtureValueOrFunction);
+    const fixtureValueFunction = (_, use) =>
+      use(fixtureValueOrFunction, undefined);
     const fixtureFunction =
       typeof fixtureValueOrFunction === "function"
         ? fixtureValueOrFunction
         : fixtureValueFunction;
-    /**
-     * @param {any} value
-     * @param {() => Promise<void>} teardown
-     */
+    /** @type { UseFunction } */
     const use = async (value, teardown) => {
       const argsAccumulated = { ...args, [key]: value };
       await reduceFixtures(fn, fixtureListRest, argsAccumulated);
-      if (teardown) await teardown();
+      if (teardown) await teardown(); // TODO: accumulate teardowns
     };
+    // TODO: inject handlers for test and worker fixtures
     switch (scope) {
       case "test":
         return fixtureFunction(args, use);
       case "worker": {
-        // TODO: merge with above
-        const value = getWorkerFixtureRegistry().valueCache[key];
-        const argsAccumulated = { ...args, [key]: value };
-        return reduceFixtures(fn, fixtureListRest, argsAccumulated);
+        /**
+         * @param {KeyValue} _
+         * @param {UseFunction} use
+         */
+        const fixtureFunction = (_, use) =>
+          use(getWorkerFixtureRegistry().valueCache[key], undefined);
+        return fixtureFunction(args, use);
       }
       default:
         throw new Error(`Unsupported scope: ${scope}`);

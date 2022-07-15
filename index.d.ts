@@ -2,6 +2,11 @@ export type KeyValue = { [key: string]: any };
 interface TestFunction<TestArgs> {
   (name: string, fn: (args: TestArgs) => Promise<void> | void): void;
 }
+export type UseFunction = (
+  value: any,
+  teardown: (() => Promise<void>) | undefined
+) => Promise<void>;
+
 export interface TestType<
   TestArgs extends KeyValue,
   WorkerArgs extends KeyValue
