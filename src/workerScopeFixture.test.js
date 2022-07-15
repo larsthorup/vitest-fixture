@@ -4,7 +4,7 @@ import {
   clearWorkerFixtureRegistry,
   getWorkerFixtureRegistry,
   workerHook,
-} from "./workerFixtureRegistry.js";
+} from "./workerScopeFixture.js";
 
 /** @typedef {import('..').KeyValue} KeyValue */
 

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { applyWithFixtures } from "./fixture.js";
+import { applyWithFixtures } from "./testScopeFixture.js";
 
 /** @typedef {import('..').KeyValue} KeyValue */
 
@@ -17,7 +17,7 @@ describe("fixture", () => {
     describe("when no fixtures", () => {
       it("should apply with no fixtures", async () => {
         const fn = mockFn();
-        applyWithFixtures(fn, {});
+        await applyWithFixtures(fn, {});
         expect(fn).toHaveBeenCalledWith({});
       });
     });
@@ -25,7 +25,7 @@ describe("fixture", () => {
     describe("when fixture is constant value", () => {
       it("should apply with that constant value", async () => {
         const fn = mockFn();
-        applyWithFixtures(
+        await applyWithFixtures(
           fn,
           /** @type { Fixtures<{port: number}, {}, {}, {}> } */
           ({
@@ -39,7 +39,7 @@ describe("fixture", () => {
     describe("when fixture has explicit test scope", () => {
       it("should apply with that constant value", async () => {
         const fn = mockFn();
-        applyWithFixtures(
+        await applyWithFixtures(
           fn,
           /** @type { Fixtures<{port: number}, {}, {}, {}> } */
           ({

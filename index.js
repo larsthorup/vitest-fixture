@@ -1,10 +1,10 @@
 import * as vitest from "vitest";
 
-import { applyWithFixtures } from "./src/fixture.js";
+import { applyWithFixtures } from "./src/testScopeFixture.js";
 import {
   getWorkerFixtureRegistry,
   workerHook,
-} from "./src/workerFixtureRegistry.js";
+} from "./src/workerScopeFixture.js";
 
 // Note: inspired by https://github.com/microsoft/playwright
 
