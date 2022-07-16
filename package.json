@@ -12,7 +12,12 @@
     "type": "git",
     "url": "git+https://github.com/larsthorup/vitest-fixture.git"
   },
-  "keywords": [],
+  "keywords": [
+    "test",
+    "fixture",
+    "vitest",
+    "playwright"
+  ],
   "author": "Lars Thorup <lars@zealake.com>",
   "license": "MIT",
   "bugs": {
