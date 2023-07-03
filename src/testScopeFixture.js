@@ -44,8 +44,8 @@ import { instantiateFixtures } from "./fixture.js";
 // };
 
 /**
- * @template TestArgs
- * @template WorkerArgs
+ * @template {KeyValue} TestArgs
+ * @template {KeyValue} WorkerArgs
  * @type {NormalizeFixtureFunction<TestArgs, WorkerArgs>}
  */
 const normalizeTestScopeFixtureFunction = (
@@ -71,8 +71,8 @@ const normalizeTestScopeFixtureFunction = (
 };
 
 /**
- * @template TestArgs
- * @template WorkerArgs
+ * @template {KeyValue} TestArgs
+ * @template {KeyValue} WorkerArgs
  * @param {(args: TestArgs & WorkerArgs) => Promise<void>} fn
  * @param {Fixtures<TestArgs, WorkerArgs, TestArgs, WorkerArgs>} fixtures
  * @returns {Promise<void>}

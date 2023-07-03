@@ -43,8 +43,8 @@ export const getWorkerFixtureRegistry = () => {
 };
 
 /**
- * @template TestArgs
- * @template WorkerArgs
+ * @template {KeyValue} TestArgs
+ * @template {KeyValue} WorkerArgs
  * @type {NormalizeFixtureFunction<TestArgs, WorkerArgs>}
  */
 const normalizeWorkerScopeFixtureFunction = (

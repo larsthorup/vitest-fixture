@@ -48,7 +48,10 @@ export type Fixtures<
 };
 type FixtureScope = "test" | "worker";
 type FixtureOptions = { scope: FixtureScope };
-export type FixtureValue<TestArgs, WorkerArgs> =
+export type FixtureValue<
+  TestArgs extends KeyValue,
+  WorkerArgs extends KeyValue
+> =
   | TestFixtureValue<any, TestArgs>
   | [TestFixtureValue<any, TestArgs>, FixtureOptions]
   | [WorkerFixtureValue<any, WorkerArgs>, FixtureOptions];
